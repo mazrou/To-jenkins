@@ -9,7 +9,7 @@ pipeline {
 
     stage('Mail Notification') {
       steps {
-        mail(subject: 'Build Result', body: 'the build has been done', to: 'gl_benaida@esi.dz')
+        mail(subject: 'Build Result', body: 'the build has been done', to: 'ga_mazrou@esi.dz')
       }
     }
 
@@ -18,13 +18,13 @@ pipeline {
         stage('test report') {
           steps {
             jacoco()
-            powershell 'gradle jacocoTestCoverageVerification'
+            sh 'gradle jacocoTestCoverageVerification'
           }
         }
 
         stage('Code Analysis') {
           steps {
-            powershell 'gradle sonarqube'
+            sh 'gradle sonarqube'
           }
         }
 
@@ -36,7 +36,7 @@ pipeline {
         branch 'master'
       }
       steps {
-        powershell 'gradle publishing'
+        sh 'gradle publishing'
       }
     }
 
