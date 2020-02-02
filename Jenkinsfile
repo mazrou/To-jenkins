@@ -1,12 +1,8 @@
 pipeline {
   agent any
   stages {
-    stage('BUILD') {
+    stage('') {
       steps {
-        powershell 'gradle build'
-        powershell 'gradle javadoc'
-        archiveArtifacts 'build/libs/**.jar'
-        archiveArtifacts 'build/reports/**'
         sh 'gradle build'
       }
     }
