@@ -18,7 +18,6 @@ pipeline {
         stage('test report') {
           steps {
             jacoco()
-            sh 'gradle jacocoTestCoverageVerification'
           }
         }
 
