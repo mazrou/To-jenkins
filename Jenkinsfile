@@ -30,21 +30,12 @@ pipeline {
       }
     }
 
-    stage('Depoly') {
+    stage('deploiment') {
       when {
         branch 'master'
       }
       steps {
-        sh 'gradle publishing'
-      }
-    }
-
-    stage('slack notification') {
-      when {
-        branch 'master'
-      }
-      steps {
-        slackSend(baseUrl: 'https://hooks.slack.com/services/', teamDomain: 'tp6-outil', token: 'TRQ5N6NJH/BRCM572RH/NxnK9GViNA6CDT0wVcota4N8')
+        sh 'gradle uploadArchives'
       }
     }
 
