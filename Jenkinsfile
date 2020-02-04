@@ -1,9 +1,13 @@
 pipeline {
   agent any
   stages {
-    stage('error') {
+    stage('Build') {
       steps {
         sh 'gradle build'
+        sh 'gradle javadoc'
+        archiveArtifacts 'build/libs/**/*.jar'
+        archiveArtifacts 'build/docs/**'
+        junit 'build/test-results/test/*.xml'
       }
     }
 
@@ -15,15 +19,19 @@ pipeline {
 
     stage('Code analysis') {
       parallel {
-        stage('test report') {
+        stage('Test report') {
           steps {
-            jacoco()
+            jacoco(execPattern: 'build/jacoco/*.exec', exclusionPattern: '**/test/*.class')
           }
         }
 
         stage('Code Analysis') {
           steps {
-            sh 'gradle sonarqube'
+            withSonarQubeEnv('sonar') {
+              sh 'build sonarqube'
+            }
+
+            waitForQualityGate true
           }
         }
 
