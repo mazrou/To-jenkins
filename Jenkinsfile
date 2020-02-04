@@ -48,6 +48,9 @@ pipeline {
     }
 
     stage('Slack notification') {
+      when {
+        branch 'master'
+      }
       steps {
         slackSend(baseUrl: 'https://hooks.slack.com/services', channel: '#gradle', color: '#ff0000', failOnError: true, message: 'The deplointment sucful', sendAsText: true, teamDomain: 'esi-8qh2328', token: 'TRCM87RQT/BTJV12813/DXgawbOtQL4CQmrm9yoTjVov', username: 'Mazrou Ayoub')
       }
